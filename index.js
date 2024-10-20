@@ -27,7 +27,7 @@ app.get('/api/shorturl/:redirectToUrl',(req,res)=>{
    let url=req.params.redirectToUrl
    if(url<=shortUrl.length)
    {
-    const redirectUrl=originalUrl[url-1]
+    const redirectUrl=originalUrl[url]
     res.redirect(redirectUrl)
    }
    res.json({"error":"No short URL found for the given input"})
@@ -35,9 +35,9 @@ app.get('/api/shorturl/:redirectToUrl',(req,res)=>{
 
 app.post('/api/shorturl', function (req, res) {
   const url = req.body.url
-  if(!url.startsWith('http') && !url.endsWith('.com'))
+  if(!url.startsWith('http://') && !url.startsWith('https://'))
   {
-    res.json({"error":"invalid url"})
+   return res.json({"error":"invalid url"})
   }
   const pos = originalUrl.indexOf(url)
   if (pos < 0) {
